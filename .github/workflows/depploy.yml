@@ -27,6 +27,7 @@ jobs:
         node -v
         npm i -g hexo-cli
         npm install hexo-generator-search --save
+        npm install hexo-render-pug --save
         npm i
         hexo clean
         hexo g
