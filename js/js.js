@@ -2,7 +2,7 @@
 /*global $, jQuery, alert*/
 
 // Custom_js
-// Back_to_top_js
+// Active_Toc_js
 // Material_js
 // Bootstrap_js
 // Sidebar_js
@@ -14,6 +14,11 @@
 //**********************************
 //**********************************
 $(document).ready(function() {
+    // Highlight js
+    $('.code').each(function(i, block) {
+        hljs.highlightBlock(block);
+    });
+    
     Array.prototype.forEach.call(document.querySelectorAll('.mdl-card__media'), function(el) {
         var link = el.querySelector('a');
         if (!link) {
@@ -88,30 +93,22 @@ $(document).ready(function() {
     $(document).click(function() {
         $("#local-search-result ul").css("display", "none");
     });
+    
+    // Set code gutter backgronud & color
+    var hljsbgc = $(".hljs").css('background');
+    var hljsc = $(".hljs").css('color');
+    $(".gutter").css({
+        "background": hljsbgc,
+        "color": hljsc
+    })
 });
 
 //**********************************
 //**********************************
-//**********************************   Back_to_top_js
+//**********************************   Active_Toc_js
 //**********************************
 //**********************************
 
-$(window).scroll(function (event) {
-    var scroll = $(window).scrollTop();
-	if (scroll > 300) {
-		$('#back-to-top').addClass('btt-visible');
-	} else {
-		$('#back-to-top').removeClass('btt-visible');
-	}
-
-	var footerOffset = $('.mdl-mini-footer').offset().top;
-	var windowHeight = $( window ).height();
-	if (scroll > footerOffset - windowHeight + 42) {
-		$('#back-to-top').addClass('btt-docked');
-	} else {
-		$('#back-to-top').removeClass('btt-docked');
-	}
-});
 
 //**********************************
 //**********************************
@@ -2270,15 +2267,12 @@ $(document).ready(function() {
 
     'use strict';
 
-    var burger = document.querySelector('.MD-burger-icon');
-
-    if (burger !== null)
-    burger.addEventListener(
+    document.querySelector('.MD-burger-icon').addEventListener(
         'click',
         function() {
             var child;
 
-            child = document.getElementById("MD-burger-id").classList;
+            child = this.childNodes[1].classList;
 
             if (child.contains('MD-burger-arrow')) {
                 child.remove('MD-burger-arrow');
