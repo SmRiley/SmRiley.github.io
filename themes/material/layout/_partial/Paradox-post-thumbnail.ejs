@@ -1,6 +1,5 @@
-<script type="text/ls-javascript" id="post-thumbnail-script">
+<script>
     var randomNum = Math.floor(Math.random() * <%= theme.thumbnail.random_amount %> + 1);
 
-    $('.post_thumbnail-random').attr('data-original', '<%= url_for(theme.img.random_thumbnail) %>' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
+    $('.post_thumbnail-random').css('background-image', 'url(' + '<%= theme.img.random_thumbnail %>' + randomNum + '.png' + ')');
 </script>

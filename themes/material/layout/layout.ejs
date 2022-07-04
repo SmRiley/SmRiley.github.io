@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html style="display: none;" <% if(config.language !== null) { %>lang="<%- config.language.substring(0,2) %>"<% } %>>
+<html>
     <%- partial('_partial/head') %>
 
     <% if(page.layout === 'gallery') { %>
         <!-- Single Gallery Page -->
         <%- partial('_widget/page-gallery') %>
     <% } else { %>
-        <body id="scheme-<%= theme.scheme %>" class="lazy">
+        <body id="scheme-<%= theme.scheme %>">
             <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
                 <% if(theme.scheme === 'Isolation') { %>
                     <!-- Isolation Header -->
@@ -22,7 +22,7 @@
                     <% if(theme.scheme === 'Paradox') { %>
                         <!-- Hamburger Button -->
                         <button class="MD-burger-icon sidebar-toggle">
-                            <span id="MD-burger-id" class="MD-burger-layer"></span>
+                            <span class="MD-burger-layer"></span>
                         </button>
                     <% } %>
 

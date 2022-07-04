@@ -1,0 +1,41 @@
+name: Hexo Deployment
+
+on:
+  push:
+    branches:
+      - main # only push events on source branch trigger deployment
+
+jobs:
+  hexo-deployment:
+    runs-on: ubuntu-latest
+    environment: Actions_Env
+    env:
+      TZ: Asia/Shanghai
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Setup Node.js 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Install dependencies & Generate static files
+      run: |
+        node -v
+        npm i hexo-cli -g
+        npm i hexo-generator-search hexo-render-pug --save
+        npm i
+        hexo clean
+        hexo g
+        
+    # Output to branch `static` from `master`
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        publish_dir: ./public
+        publish_branch: hexo
+        personal_token: ${{ secrets.GH_TOKEN }}
