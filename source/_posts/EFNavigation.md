@@ -56,12 +56,13 @@ await dbContext.SaveChangesAsync();
     _context.Products.Update(Product);
     await _context.SaveChangesAsync();
     ```
-在实际中,我选择第三个方法会导致第二次Update会出现主键冲突错误,而第一种方案没有这个问题.答案末尾也针对不推荐使用这种方法的原因说明了:
+在实际中,~~我选择第三个方法会导致第二次Update会出现主键冲突错误,而第一种方案没有这个问题~~.答案末尾也针对不推荐使用这种方法的原因说明了:
 >The last technique is explained in Saving Data - Disconnected Entities - Mix of new and existing entities:
 >> With auto-generated keys, Update can again be used for both inserts and updates, even if the graph contains a mix of entities that require inserting and those that require updating  
 >
 >Since it works only when all entities use auto-generated PKs, and also produces unnecessary updates of the related entities, I don't recommend it.
 
+**主键冲突错误是因为在Blazor中使用DbContextFacotry产生的DbContext不一致的原因,与Update无关**
 ### 复杂导航属性
 比如上述场景,如果文章多出一个联合发布人的情况:
 ```csharp

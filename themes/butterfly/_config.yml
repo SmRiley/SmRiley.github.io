@@ -600,7 +600,7 @@ beautify:
 # Global font settings
 # Don't modify the following settings unless you know how they work (非必要不要修改)
 font:
-  global-font-size:
+  global-font-size: 15px
   code-font-size:
   font-family:
   code-font-family:
@@ -633,7 +633,7 @@ subtitle:
   source: 3
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
   sub: 
-    - 名师大将莫自牢,千军万马避白袍
+    - 相濡以沫,不如相忘于江湖
 
 # Loading Animation (加載動畫)
 preloader: false
@@ -643,7 +643,7 @@ preloader: false
 
 aside:
   enable: true
-  hide: true
+  hide: false
   button: true
   mobile: true # display on mobile
   position: left # left or right
@@ -660,7 +660,7 @@ aside:
       text: Follow Me
       link: https://github.com/SmRiley
   card_announcement:
-    enable: true
+    enable: false
     content: 我家里还蛮大的,欢迎你来我家玩,玩累了就可以直接睡觉,没问题的
   card_recent_post:
     enable: true
