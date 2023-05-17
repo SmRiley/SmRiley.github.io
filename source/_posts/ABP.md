@@ -16,10 +16,10 @@ ABP是一个开源且文档友好的应用程序框架。ABP不仅仅是一个�
 
 以保险业务为例来进行编程实践，一个高度抽象的保险领域划分如图所示。通过用例分析，我们把整个业务划分成产品域、承保、核保、理赔等多个领域（Bounded-Context），每个领域又可以根据业务发展情况拆分子域。
 
-![](../imgs/领域驱动DDD/20220815141237.png)  
+![](../imgs/ABP/20220815141237.png)  
 ### 分层
 在每个领域内部，相对于 MVC 对应用三层架构的拆分，领域驱动的设计将应用模块内部分为如图示的四层。
-![](../imgs/领域驱动DDD/20220815141500.png)  
+![](../imgs/ABP/20220815141500.png)  
 - 用户接口(表示层): 为用户提供接口. 使用应用层实现与用户交互.
 - 应用层: 表示层与领域层的中介,编排业务对象执行特定的应用程序任务. 使用应用程序逻辑实现用例.
 - 领域层: 包含业务对象以及业务规则. 是应用程序的核心.
@@ -28,7 +28,7 @@ ABP是一个开源且文档友好的应用程序框架。ABP不仅仅是一个�
 - 领域层:
   - 实体:DDD中要求实体是唯一的且可持续变化的。业务中最常见的唯一标识的用户就是实体,比如普通人通过身份证对其进行唯一标识,不管你年龄住址等信息如何变动,你依然是你.
   - 聚合与聚合根:我们把一些关联性极强、生命周期一致的实体、值对象放到一个聚合里。聚合是领域对象的显式分组，旨在支持领域模型的行为和不变性，同时充当一致性和事务性边界。如果聚合根比喻成一个小组,那么聚合根就是组长,通过他可以快速定位到这个小组. 以上面所属的保险行业为例定义的聚合和聚合根:  
-  ![](../imgs/领域驱动DDD/20220815144413.png)  
+  ![](../imgs/ABP/20220815144413.png)  
   - 值对象:当你只关心某个对象的属性时，该对象便可作为一个值对象。 我们需要将值对象看成不变对象，不要给它任何身份标识，还应该尽量避免像实体对象一样的复杂性。比如上面保单的客户实体,他的地址就可以看成一个值对象.
   - 仓储:仓储介于领域模型和数据模型之间，主要用于聚合的持久化和检索。它隔离了领域模型和数据模型.这点其实和我们以往在EF Core或者FreeSql上使用的仓储模式区别不大.
   - 领域服务:领域中的一些概念不太适合建模为对象，即归类到实体对象或值对象，因为它们本质上就是一些操作，一些动作，而不是事物。  
@@ -60,10 +60,10 @@ ABP是一个开源且文档友好的应用程序框架。ABP不仅仅是一个�
 >3. npm-windows-upgrade  
 
 可以得到下图的项目结构:  
-![](../imgs/领域驱动DDD/20220815154934.png)  
+![](../imgs/ABP/20220815154934.png)  
 其中,Acme.BookStore.DbMigrator项目为数据库迁移项目,初次运行它,会自动安装ef tool(如果使用ef core)进行数据库迁移并设置种子数据.
 项目分层及依赖结构:
-![](../imgs/领域驱动DDD/20220815155252.png)  
+![](../imgs/ABP/20220815155252.png)  
 
 - Domain：主要包含实体和域服务
 - Domain.Shared：可以与客户端共享的其他与域相关的对象（枚举或其它与实体相关的用于引用
@@ -76,7 +76,7 @@ DTO(Data Transfer Objects)
 - HttpApi.Client：定义C#客户端代理以使用解决方案的HTTP API的项目，可以将此库共享给第三方
 客户端以便在其他DotNet应用程序中使用该项目HTTP API
 其中,运行项目Web根据创建模板也有命名差异,比如为Blazor模板时即为Blazor,如果是使用WebAPI模板,则为HttpApi.Host,其中除了program.cs外,还有  
-![](../imgs/领域驱动DDD/20220816105806.png)  
+![](../imgs/ABP/20220816105806.png)  
 `{项目模板名}Module` 、 `{项目模板名}BrandingProvider` 、 `{项目模板名}AutoMapperProfile`  
 三个类,其中最重要的`Module`是整个项目的配置文件类,大部分配置项都在其中定义,比如路由、I18N、中间件等等;`AutoMapperProfile`则是自动映射工具的配置规则(默认集成了AutoMapper);`BrandingProvider`则是MVC/Razor下UI层的视图显示配置(比如AppName和LogoUrl之类的).
 
@@ -119,7 +119,7 @@ ABP为实体提供了两个基本的基类: AggregateRoot和Entity.也就是我�
  public DbSet<Book> Books { get; set; }
 ```
 添加完成后,分别使用ef tool的`add-migrattion up`和`update-database`将添加迁移并更更新到数据库中.  
-![](../imgs/领域驱动DDD/20220815170248.png)  
+![](../imgs/ABP/20220815170248.png)  
 然后在`Application.Contract`中添加`IBookAppService`接口和`BookDto`类
 ```csharp
 public class BookAddReq
@@ -203,7 +203,7 @@ var dbSet = await _bookRepository.GetDbSetAsync();
 ```
 
 Service创建完成后,启动项目打开`/Swagger`,即可看到的Restful API,这部分我们并没有在Controller里面去定义,这是ABP通过动态API默认实现的.
-![](../imgs/领域驱动DDD/20220816101032.png)  
+![](../imgs/ABP/20220816101032.png)  
 | Service方法名称 | HttpMethod | 路由 
 | ---------| --------- | ----
 | GetAsync(Guid id) |GET|	/api/app/book/{id}
@@ -294,7 +294,7 @@ public override void Define(IPermissionDefinitionContext context)
 ```
 
 在ABP自带的Web端的权限管理中(如果是带UI的模板)可以看到自定义的权限并将其分配给角色和用户  
-![仅当拥有父级权限时子权限才可被选中](../imgs/领域驱动DDD/20220816174421.png)  
+![仅当拥有父级权限时子权限才可被选中](../imgs/ABP/20220816174421.png)  
 ABP会将其进行持久化存入数据库内  
 然后便可以在ApplicationService中设置对应的权限:
 ```csharp
@@ -314,7 +314,7 @@ public class BookAppService : ApplicationService,IBookAppService
 }
 ```
 WebAPI下,ABP在Swagger中默认启用Oauth2授权码模式
-![ Oauth2授权码模式与第三方平台例如微信扫码登录一致,登录后跳转返回jwt](../imgs/领域驱动DDD/20220817135244.png) 
+![ Oauth2授权码模式与第三方平台例如微信扫码登录一致,登录后跳转返回jwt](../imgs/ABP/20220817135244.png) 
 
 > **由于ABP默认集成了IdentityServer,所以未登录的情况下请求接口会跳转至`/Account/Login`而非返回401,这会给前端带来困扰.需要在AddAuthentication()中使用JwtBearerDefaults.AuthenticationScheme参数来指定默认的认证方案(IdentityServer默认会使用Cookie方案).**
 
@@ -427,7 +427,7 @@ public virtual Guid? DeleterId { get; set; }
 public virtual DateTime? DeletionTime { get; set; }
 ```
 这三个属性用于实现软删除,完整的FullAudited就相当于封装了这部分审计功能.
-![](../imgs/领域驱动DDD/20220818134513.png)  
+![](../imgs/ABP/20220818134513.png)  
 Author的`Name`和`SetName()`限制为私有,构造方法和`ChangeName()`限制为仅项目内访问,强制其只能使用领域服务设置名字.`Check()`是ABP所提供的检查类,会用来校验方法是否合法并设置值.
 ```csharp
 public class AuthorManager : DomainService
